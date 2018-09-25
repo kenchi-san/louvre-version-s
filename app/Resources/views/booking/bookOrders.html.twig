@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block accueil %}
+
+    <li class="nav-item px-lg-4"><a
+                class="nav-link text-uppercase text-expanded"
+                href="{{ path('home') }}">retour à l'accueil</a></li>
+{% endblock %}
+
+{% block body %}
+    <section class="page-section cta">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+
+                    <h2 class="section-heading mb-4">
+                        <span class="section-heading-upper">Formulaire de réservation:</span>
+                        <span class="section-heading-lower"></span>
+                    </h2>
+                    <p class="mb-0">
+                        {{ form_start(form) }}
+                        {{ form_row(form.bookingDate,{ 'label': 'Votre date de visite:' }) }}
+                        {{ form_errors(form.bookingDate) }}
+                        {{ form_widget(form.bookingDate) }}
+                        {{ form_row(form.qteOrder,{ 'label': 'Nombre de personne:' }) }}
+                        {{ form_errors(form.qteOrder) }}
+                        {{ form_row(form.typeOrder,{ 'label': 'type de journée:' }) }}
+                        {{ form_errors(form.typeOrder) }}
+
+
+                        <button class="btn btn-success"> sauvegarder votre réservation:</button>
+                        {{ form_end(form) }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
