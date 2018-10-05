@@ -35,7 +35,7 @@
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item active px-lg-4">
                     {% block accueil %}
-                        <a class="nav-link text-uppercase text-expanded" href="#">réservation
+                        <a class="nav-link text-uppercase text-expanded" href="{{ path('reservation') }}">réservation
                             <span class="sr-only">(current)</span>
                         </a>
                     {% endblock %}
@@ -77,7 +77,7 @@
                             Tarif réduit | sur présentation de justificatifs | 10 €</br>
                         </p>
                         <div class="intro-button mx-auto">
-                            <a class="btn btn-primary btn-xl" href="#">Réservation</a>
+                            <a class="btn btn-primary btn-xl" href="{{ path('reservation') }}">Réservation</a>
                         </div>
                         {% endblock prix %}
                     </div>
