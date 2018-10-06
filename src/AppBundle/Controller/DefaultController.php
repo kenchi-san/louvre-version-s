@@ -64,8 +64,9 @@ class DefaultController extends Controller
 
 
         $order = $orderManager->MyCurrentOrder();
-        $form = $this->createForm(InitOrderType::class,$order);
-        $form->handleRequest($request);
+        $form = $this->createForm(OrderType::class,$order);
+        /*dump($tickets);
+        die();*/
         return $this->render("booking/bookingOrdersView.html.twig",['form'=>$form->createView()]);
 
 
