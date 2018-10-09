@@ -18,6 +18,11 @@
         <!-- Custom styles for this template -->
         <link href="{{ asset('css/business-casual.css') }}" rel="stylesheet">
 
+        <link href="{{ asset('css/FormCssView.css') }}" rel="stylesheet" id="bootstrap-css">
+
+
+
+
     {% endblock %}
 </head>
 <body>
@@ -46,7 +51,7 @@
                     </a>
                 </li>
                 <li class="nav-item px-lg-4">
-                    <a class="nav-link text-uppercase text-expanded" href="#">Nous contacter</a>
+                    <a class="nav-link text-uppercase text-expanded" href="{{ path('tester') }}">Nous contacter</a>
                 </li>
 
             </ul>

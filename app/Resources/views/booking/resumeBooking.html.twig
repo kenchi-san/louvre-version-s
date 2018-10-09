@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block accueil %}
+
+    <li class="nav-item px-lg-4"><a
+                class="nav-link text-uppercase text-expanded"
+                href="{{ path('homepage') }}">retour à l'accueil</a></li>
+{% endblock %}
+
+{% block body %}
+    <section class="page-section cta">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+
+                    <h2 class="section-heading mb-4">
+                        <span class="section-heading-upper">Récapitulatif de votre commande:</span>
+                        <span class="section-heading-lower"></span>
+                    </h2>
+                    <p class="mb-0">
+                        {{ resumeOrder.typeOrder }}
+
+                        {{ resumeOrder.bookingDate|date }}
+                        {% for ticket in resumeOrder.tickets %}
+                            {{ ticket.firstname }}
+
+
+                        {% endfor %}
+
+                        <button class="btn btn-success"> Payer votre commande</button>
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

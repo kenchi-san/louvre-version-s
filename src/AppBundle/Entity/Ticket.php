@@ -56,12 +56,6 @@ class Ticket
      */
     private $mail;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="age", type="integer")
-     */
-    private $age;
 
     /**
      * @var int
@@ -215,19 +209,7 @@ class Ticket
         return $this->mail;
     }
 
-    /**
-     * Set age
-     *
-     * @param integer $age
-     *
-     * @return Ticket
-     */
-    public function setAge($age)
-    {
-        $this->age = $age;
 
-        return $this;
-    }
 
     /**
      * Get age
@@ -236,7 +218,7 @@ class Ticket
      */
     public function getAge()
     {
-        return $this->age;
+        return $this->getBirthday()->diff($this->getOrder()->getBookingDate())->y;
     }
 
     /**

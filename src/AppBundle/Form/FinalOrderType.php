@@ -3,12 +3,11 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class InitOrderType extends AbstractType
+class FinalOrderType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -22,19 +21,17 @@ class InitOrderType extends AbstractType
                 'widget' => 'single_text'
             ))
             ->add('qteOrder')
-            ->add('typeOrder',ChoiceType::class, array(
-                'choices'  => array(
-                    'journée' => "full-day",
-                    'demi-journée' => "half-day",
-
-                ),
-            ))
-            //->add('price')
+            ->add('typeOrder')
+            ->add('tickets',CollectionType::class, [
+                'entry_type' => TicketType::class,
+                'allow_add' => true
+            ])
+            ->add('price')
             //->add('bookingNumber')
         ;
     }/**
-     * {@inheritdoc}
-     */
+ * {@inheritdoc}
+ */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
@@ -47,7 +44,7 @@ class InitOrderType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_initorder';
+        return 'appbundle_finalOrder';
     }
 
 

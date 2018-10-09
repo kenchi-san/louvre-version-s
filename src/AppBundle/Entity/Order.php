@@ -2,8 +2,10 @@
 
 namespace AppBundle\Entity;
 
+use datetime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Order
@@ -23,14 +25,14 @@ class Order
     private $id;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="createdAt", type="datetime", unique=true)
      */
     private $createdAt;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="bookingDate", type="datetime")
      */
@@ -38,8 +40,8 @@ class Order
 
     /**
      * @var int
-     *
      * @ORM\Column(name="qteOrder", type="integer")
+     * @Assert\Length(min="1",minMessage="Vous devez mettre au moins une personne pour faire votre réservation", max="3",maxMessage="La capacité pour les visites ne peux excéder {{limit}} personnes")
      */
     private $qteOrder;
 
@@ -76,6 +78,7 @@ class Order
     public function __construct()
     {
         $this->tickets = new ArrayCollection();
+        $this->setCreatedAt(new datetime()) ;
     }
 
     /**
@@ -91,7 +94,7 @@ class Order
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param DateTime $createdAt
      *
      * @return Order
      */
@@ -105,7 +108,7 @@ class Order
     /**
      * Get createdAt
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getCreatedAt()
     {
@@ -115,7 +118,7 @@ class Order
     /**
      * Set bookingDate
      *
-     * @param \DateTime $bookingDate
+     * @param DateTime $bookingDate
      *
      * @return Order
      */
@@ -129,7 +132,7 @@ class Order
     /**
      * Get bookingDate
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getBookingDate()
     {
