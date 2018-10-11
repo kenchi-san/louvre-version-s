@@ -13,12 +13,13 @@ use Symfony\Component\Validator\Tests\Fixtures\ConstraintAValidator;
  */
 class PriceManager extends ConstraintAValidator
 {
+    const PRIX_BEBE = 0;
     const PRIX_NORMAL = 16;
     const PRIX_ENFANT = 8;
     const PRIX_SENIOR = 12;
     const PRIX_REDUIT = 10;
 
-    const AGE_BEBE = 0;
+
     const AGE_ENFANT = 4;
     const AGE_ADULTE = 12;
     const AGE_SENIOR = 60;
@@ -30,26 +31,42 @@ class PriceManager extends ConstraintAValidator
     public function computeOrderPrice(Order $order)
     {
 
-
         foreach ($order->getTickets() as $ticket) {
-            $this->computeTicketPrice($ticket);
+          return $this->computeTicketPrice($ticket);
         }
+
     }
 
     /**
      * @param Ticket $ticket
      */
-    private function computeTicketPrice(Ticket $ticket)
+    public function computeTicketPrice(Ticket $ticket)
     {
 
-        /* $computePrice = 0;
-         $ticket->getDiscount();
-         $ticket->getAge();
+        if ($ticket->getAge() < self::AGE_ENFANT) {
+            $ticket->setPrice(self::PRIX_BEBE);
+        } elseif ($ticket->getAge() >= self::AGE_ENFANT && $ticket->getAge() <= self::AGE_ADULTE) {
+            $ticket->setPrice(self::PRIX_ENFANT);
+        } elseif ($ticket->getAge() >= self::AGE_SENIOR) {
+            $ticket->setPrice(self::PRIX_SENIOR);
+        } elseif ($ticket->getAge() >= self::AGE_ADULTE && $ticket->getAge() <= self::AGE_SENIOR) {
+            $ticket->setPrice(self::PRIX_NORMAL);
+
+        }elseif ($ticket->getDiscount() === true) {
+        $ticket->setPrice(self::PRIX_REDUIT);
+    }
+        else {
+            $ticket->setPrice(self::PRIX_NORMAL);
+        }
+
+
+
+    }
+}
+/* $computePrice = 0;
+
+
          $ticket->getOrder()->getTypeOrder();
-
-
          $ticket->setPrice($computePrice);
          return $computePrice;*/
-    }
 
-}

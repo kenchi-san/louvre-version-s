@@ -35,6 +35,8 @@ class OrderManager
         $this->session = $session;
         $this->priceManager = $priceManager;
 
+
+
     }
 
     /**
@@ -67,9 +69,13 @@ class OrderManager
     }
 
 
-    public function computePrice(Order $order)
+    /**
+     * @param Order $order
+     */
+    public function computePrice( Order $order)
     {
-$this->priceManager->computeOrderPrice($order);
+ $this->priceManager->computeOrderPrice($order);
+
     }
 
 
@@ -88,6 +94,7 @@ $this->priceManager->computeOrderPrice($order);
             throw new NotFoundHttpException();
         }
     }
+
 
 
 

@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="order")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OrderRepository")
+ *
  */
 class Order
 {
@@ -79,6 +80,7 @@ class Order
     {
         $this->tickets = new ArrayCollection();
         $this->setCreatedAt(new datetime()) ;
+        $this->bookingNumber= md5(random_bytes(10));
     }
 
     /**
@@ -268,4 +270,6 @@ class Order
     {
         return $this->tickets;
     }
+
+
 }

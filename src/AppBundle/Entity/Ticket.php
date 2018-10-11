@@ -218,7 +218,8 @@ class Ticket
      */
     public function getAge()
     {
-        return $this->getBirthday()->diff($this->getOrder()->getBookingDate())->y;
+        $this->getBirthday()->diff($this->getOrder()->getBookingDate())->y;
+
     }
 
     /**
@@ -293,4 +294,6 @@ class Ticket
     {
         return $this->order;
     }
+
+
 }

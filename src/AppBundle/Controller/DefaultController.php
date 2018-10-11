@@ -71,7 +71,7 @@ class DefaultController extends Controller
 
             $orderManager->computePrice($order);
             dump($orderManager);
-            die();
+die();
             return $this->redirectToRoute("order_step_3");
 
         }
