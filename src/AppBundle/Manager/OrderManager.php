@@ -29,12 +29,11 @@ class OrderManager
     private $priceManager;
 
 
-    public function __construct(SessionInterface $session, PriceManager $priceManager )
+    public function __construct(SessionInterface $session, PriceManager $priceManager)
     {
 
         $this->session = $session;
         $this->priceManager = $priceManager;
-
 
 
     }
@@ -72,9 +71,9 @@ class OrderManager
     /**
      * @param Order $order
      */
-    public function computePrice( Order $order)
+    public function computePrice(Order $order)
     {
- $this->priceManager->computeOrderPrice($order);
+        $this->priceManager->computeOrderPrice($order);
 
     }
 
@@ -88,14 +87,12 @@ class OrderManager
         $order = $this->session->get(self::SESSION_ORDER_KEY);
 
 
-        if($order instanceof Order){
+        if ($order instanceof Order) {
             return $order;
-        }else{
+        } else {
             throw new NotFoundHttpException();
         }
     }
-
-
 
 
 }

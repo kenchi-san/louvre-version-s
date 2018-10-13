@@ -70,8 +70,8 @@ class DefaultController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $orderManager->computePrice($order);
-            dump($orderManager);
-die();
+            //dump($orderManager);die();
+
             return $this->redirectToRoute("order_step_3");
 
         }
@@ -103,7 +103,7 @@ die();
      */
     public function bibi()
     {
-
+return $this->render("booking/payementStripe.html.twig");
 
     }
 

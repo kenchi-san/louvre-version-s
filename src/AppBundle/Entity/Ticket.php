@@ -216,9 +216,9 @@ class Ticket
      *
      * @return int
      */
-    public function getAge()
+    public function getAge($order)
     {
-        $this->getBirthday()->diff($this->getOrder()->getBookingDate())->y;
+        return $this->getBirthday()->diff($order->getBookingDate())->y;
 
     }
 

@@ -247,7 +247,6 @@ class Order
     public function addTicket(\AppBundle\Entity\Ticket $ticket)
     {
         $this->tickets[] = $ticket;
-
         return $this;
     }
 

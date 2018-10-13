@@ -21,9 +21,9 @@ class InitOrderType extends AbstractType
 
                 'widget' => 'single_text'
             ))
-            ->add('qteOrder')
-            ->add('typeOrder',ChoiceType::class, array(
-                'choices'  => array(
+            ->add('qteOrder', \Symfony\Component\Form\Extension\Core\Type\IntegerType::class, ['attr' => ['min' => 0, 'max' => 10]])
+            ->add('typeOrder', ChoiceType::class, array(
+                'choices' => array(
                     'journée' => "full-day",
                     'demi-journée' => "half-day",
 
@@ -32,7 +32,9 @@ class InitOrderType extends AbstractType
             //->add('price')
             //->add('bookingNumber')
         ;
-    }/**
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)

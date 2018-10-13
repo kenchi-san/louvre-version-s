@@ -32,41 +32,36 @@ class PriceManager extends ConstraintAValidator
     {
 
         foreach ($order->getTickets() as $ticket) {
-          return $this->computeTicketPrice($ticket);
+          return $this->computeTicketPrice($ticket , $order);
         }
 
     }
 
     /**
      * @param Ticket $ticket
+     * @param Order $order
      */
-    public function computeTicketPrice(Ticket $ticket)
+    public function computeTicketPrice(Ticket $ticket, Order $order)
     {
+        //dump($ticket);die;
+        foreach ($order->getTickets() as $ticket) {
+            if ($ticket->getDiscount() === true) {
+                $ticket->setPrice(self::PRIX_REDUIT);
+            }
+            elseif($ticket->getAge($order) < self::AGE_ENFANT) {
+                $ticket->setPrice(self::PRIX_BEBE);
+            } elseif ($ticket->getAge($order) >= self::AGE_ENFANT && $ticket->getAge($order) <= self::AGE_ADULTE) {
+                $ticket->setPrice(self::PRIX_ENFANT);
+            } elseif ($ticket->getAge($order) >= self::AGE_SENIOR) {
+                $ticket->setPrice(self::PRIX_SENIOR);
+            } elseif ($ticket->getAge($order) >= self::AGE_ADULTE && $ticket->getAge($order) <= self::AGE_SENIOR) {
+                $ticket->setPrice(self::PRIX_NORMAL);
 
-        if ($ticket->getAge() < self::AGE_ENFANT) {
-            $ticket->setPrice(self::PRIX_BEBE);
-        } elseif ($ticket->getAge() >= self::AGE_ENFANT && $ticket->getAge() <= self::AGE_ADULTE) {
-            $ticket->setPrice(self::PRIX_ENFANT);
-        } elseif ($ticket->getAge() >= self::AGE_SENIOR) {
-            $ticket->setPrice(self::PRIX_SENIOR);
-        } elseif ($ticket->getAge() >= self::AGE_ADULTE && $ticket->getAge() <= self::AGE_SENIOR) {
-            $ticket->setPrice(self::PRIX_NORMAL);
+            } else {
+                $ticket->setPrice(self::PRIX_NORMAL);
+            }
 
-        }elseif ($ticket->getDiscount() === true) {
-        $ticket->setPrice(self::PRIX_REDUIT);
-    }
-        else {
-            $ticket->setPrice(self::PRIX_NORMAL);
         }
-
-
-
     }
 }
-/* $computePrice = 0;
-
-
-         $ticket->getOrder()->getTypeOrder();
-         $ticket->setPrice($computePrice);
-         return $computePrice;*/
 
