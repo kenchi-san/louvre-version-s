@@ -2,14 +2,17 @@
 
 namespace AppBundle\Entity;
 
+use datetime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Order
  *
  * @ORM\Table(name="order")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OrderRepository")
+ *
  */
 class Order
 {
@@ -23,14 +26,14 @@ class Order
     private $id;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="createdAt", type="datetime", unique=true)
      */
     private $createdAt;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="bookingDate", type="datetime")
      */
@@ -38,8 +41,8 @@ class Order
 
     /**
      * @var int
-     *
      * @ORM\Column(name="qteOrder", type="integer")
+     * @Assert\Length(min="1",minMessage="Vous devez mettre au moins une personne pour faire votre réservation", max="3",maxMessage="La capacité pour les visites ne peux excéder {{limit}} personnes")
      */
     private $qteOrder;
 
@@ -50,6 +53,12 @@ class Order
      */
     private $typeOrder;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mail", type="string", length=255, unique=true)
+     */
+    private $mail;
     /**
      * @var int
      *
@@ -76,6 +85,8 @@ class Order
     public function __construct()
     {
         $this->tickets = new ArrayCollection();
+        $this->setCreatedAt(new datetime());
+        $this->bookingNumber = md5(random_bytes(10));
     }
 
     /**
@@ -89,9 +100,19 @@ class Order
     }
 
     /**
+     * Get createdAt
+     *
+     * @return DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param DateTime $createdAt
      *
      * @return Order
      */
@@ -103,19 +124,19 @@ class Order
     }
 
     /**
-     * Get createdAt
+     * Get bookingDate
      *
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getCreatedAt()
+    public function getBookingDate()
     {
-        return $this->createdAt;
+        return $this->bookingDate;
     }
 
     /**
      * Set bookingDate
      *
-     * @param \DateTime $bookingDate
+     * @param DateTime $bookingDate
      *
      * @return Order
      */
@@ -127,13 +148,13 @@ class Order
     }
 
     /**
-     * Get bookingDate
+     * Get qteOrder
      *
-     * @return \DateTime
+     * @return integer
      */
-    public function getBookingDate()
+    public function getQteOrder()
     {
-        return $this->bookingDate;
+        return $this->qteOrder;
     }
 
     /**
@@ -151,13 +172,13 @@ class Order
     }
 
     /**
-     * Get qteOrder
+     * Get typeOrder
      *
-     * @return integer
+     * @return string
      */
-    public function getQteOrder()
+    public function getTypeOrder()
     {
-        return $this->qteOrder;
+        return $this->typeOrder;
     }
 
     /**
@@ -175,13 +196,13 @@ class Order
     }
 
     /**
-     * Get typeOrder
+     * Get price
      *
-     * @return string
+     * @return integer
      */
-    public function getTypeOrder()
+    public function getPrice()
     {
-        return $this->typeOrder;
+        return $this->price;
     }
 
     /**
@@ -199,13 +220,13 @@ class Order
     }
 
     /**
-     * Get price
+     * Get bookingNumber
      *
-     * @return integer
+     * @return string
      */
-    public function getPrice()
+    public function getBookingNumber()
     {
-        return $this->price;
+        return $this->bookingNumber;
     }
 
     /**
@@ -223,16 +244,6 @@ class Order
     }
 
     /**
-     * Get bookingNumber
-     *
-     * @return string
-     */
-    public function getBookingNumber()
-    {
-        return $this->bookingNumber;
-    }
-
-    /**
      * Add ticket
      *
      * @param \AppBundle\Entity\Ticket $ticket
@@ -242,7 +253,7 @@ class Order
     public function addTicket(\AppBundle\Entity\Ticket $ticket)
     {
         $this->tickets[] = $ticket;
-
+        $ticket->setOrder($this);
         return $this;
     }
 
@@ -265,4 +276,6 @@ class Order
     {
         return $this->tickets;
     }
+
+
 }

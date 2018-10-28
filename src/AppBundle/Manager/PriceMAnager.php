@@ -24,44 +24,69 @@ class PriceManager extends ConstraintAValidator
     const AGE_ADULTE = 12;
     const AGE_SENIOR = 60;
 
+    const COEF_DEMI_JOURNEE = 0.5;
+
     /**
      * Calculer les prix des tickets d'une commande et le prix total
      * @param Order $order
+     * @return int
      */
     public function computeOrderPrice(Order $order)
     {
-
+        $totalPrice = 0;
         foreach ($order->getTickets() as $ticket) {
-          return $this->computeTicketPrice($ticket , $order);
+
+
+            $totalPrice += $this->computeTicketPrice($ticket);
+
+
         }
 
+        $order->setPrice($totalPrice);
+
+        return $totalPrice;
+
     }
+
 
     /**
      * @param Ticket $ticket
-     * @param Order $order
+     * @return int
      */
-    public function computeTicketPrice(Ticket $ticket, Order $order)
+    public function computeTicketPrice(Ticket $ticket)
     {
-        //dump($ticket);die;
-        foreach ($order->getTickets() as $ticket) {
-            if ($ticket->getDiscount() === true) {
-                $ticket->setPrice(self::PRIX_REDUIT);
-            }
-            elseif($ticket->getAge($order) < self::AGE_ENFANT) {
-                $ticket->setPrice(self::PRIX_BEBE);
-            } elseif ($ticket->getAge($order) >= self::AGE_ENFANT && $ticket->getAge($order) <= self::AGE_ADULTE) {
-                $ticket->setPrice(self::PRIX_ENFANT);
-            } elseif ($ticket->getAge($order) >= self::AGE_SENIOR) {
-                $ticket->setPrice(self::PRIX_SENIOR);
-            } elseif ($ticket->getAge($order) >= self::AGE_ADULTE && $ticket->getAge($order) <= self::AGE_SENIOR) {
-                $ticket->setPrice(self::PRIX_NORMAL);
-
+        if ($ticket->getOrder()->getTypeOrder() === "jour plein") {
+            if ($ticket->getDiscount()) {
+                $price = (self::PRIX_REDUIT);
+            } elseif ($ticket->getAge() < self::AGE_ENFANT) {
+                $price = (self::PRIX_BEBE);
+            } elseif ($ticket->getAge() < self::AGE_ADULTE) {
+                $price = (self::PRIX_ENFANT);
+            } elseif ($ticket->getAge() < self::AGE_SENIOR) {
+                $price = (self::PRIX_NORMAL);
             } else {
-                $ticket->setPrice(self::PRIX_NORMAL);
+                $price = (self::PRIX_SENIOR);
+            }
+        } else {
+            if ($ticket->getDiscount()) {
+                $price = (self::PRIX_REDUIT * self::COEF_DEMI_JOURNEE);
+            } elseif ($ticket->getAge() < self::AGE_ENFANT) {
+                $price = (self::PRIX_BEBE * self::COEF_DEMI_JOURNEE);
+            } elseif ($ticket->getAge() < self::AGE_ADULTE) {
+                $price = (self::PRIX_ENFANT * self::COEF_DEMI_JOURNEE);
+            } elseif ($ticket->getAge() < self::AGE_SENIOR) {
+                $price = (self::PRIX_NORMAL * self::COEF_DEMI_JOURNEE);
+            } else {
+                $price = (self::PRIX_SENIOR * self::COEF_DEMI_JOURNEE);
             }
 
         }
+
+        $ticket->setPrice($price);
+
+        return $price;
     }
+
+
 }
 

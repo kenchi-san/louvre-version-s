@@ -54,6 +54,12 @@ class Order
     private $typeOrder;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="mail", type="string", length=255, unique=true)
+     */
+    private $mail;
+    /**
      * @var int
      *
      * @ORM\Column(name="price", type="integer")
@@ -75,12 +81,13 @@ class Order
 
     /**
      * Constructor
+     * @throws \Exception
      */
     public function __construct()
     {
         $this->tickets = new ArrayCollection();
-        $this->setCreatedAt(new datetime()) ;
-        $this->bookingNumber= md5(random_bytes(10));
+        $this->setCreatedAt(new datetime());
+        $this->bookingNumber = md5(random_bytes(10));
     }
 
     /**
@@ -91,6 +98,16 @@ class Order
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 
     /**
@@ -108,13 +125,13 @@ class Order
     }
 
     /**
-     * Get createdAt
+     * Get bookingDate
      *
      * @return DateTime
      */
-    public function getCreatedAt()
+    public function getBookingDate()
     {
-        return $this->createdAt;
+        return $this->bookingDate;
     }
 
     /**
@@ -132,13 +149,13 @@ class Order
     }
 
     /**
-     * Get bookingDate
+     * Get qteOrder
      *
-     * @return DateTime
+     * @return integer
      */
-    public function getBookingDate()
+    public function getQteOrder()
     {
-        return $this->bookingDate;
+        return $this->qteOrder;
     }
 
     /**
@@ -156,13 +173,13 @@ class Order
     }
 
     /**
-     * Get qteOrder
+     * Get typeOrder
      *
-     * @return integer
+     * @return string
      */
-    public function getQteOrder()
+    public function getTypeOrder()
     {
-        return $this->qteOrder;
+        return $this->typeOrder;
     }
 
     /**
@@ -180,13 +197,13 @@ class Order
     }
 
     /**
-     * Get typeOrder
+     * Get price
      *
-     * @return string
+     * @return integer
      */
-    public function getTypeOrder()
+    public function getPrice()
     {
-        return $this->typeOrder;
+        return $this->price;
     }
 
     /**
@@ -204,13 +221,13 @@ class Order
     }
 
     /**
-     * Get price
+     * Get bookingNumber
      *
-     * @return integer
+     * @return string
      */
-    public function getPrice()
+    public function getBookingNumber()
     {
-        return $this->price;
+        return $this->bookingNumber;
     }
 
     /**
@@ -228,34 +245,25 @@ class Order
     }
 
     /**
-     * Get bookingNumber
-     *
-     * @return string
-     */
-    public function getBookingNumber()
-    {
-        return $this->bookingNumber;
-    }
-
-    /**
      * Add ticket
      *
-     * @param \AppBundle\Entity\Ticket $ticket
+     * @param Ticket $ticket
      *
      * @return Order
      */
-    public function addTicket(\AppBundle\Entity\Ticket $ticket)
+    public function addTicket(Ticket $ticket)
     {
         $this->tickets[] = $ticket;
+        $ticket->setOrder($this);
         return $this;
     }
 
     /**
      * Remove ticket
      *
-     * @param \AppBundle\Entity\Ticket $ticket
+     * @param Ticket $ticket
      */
-    public function removeTicket(\AppBundle\Entity\Ticket $ticket)
+    public function removeTicket(Ticket $ticket)
     {
         $this->tickets->removeElement($ticket);
     }
@@ -271,4 +279,28 @@ class Order
     }
 
 
+
+    /**
+     * Set mail
+     *
+     * @param string $mail
+     *
+     * @return Order
+     */
+    public function setMail($mail)
+    {
+        $this->mail = $mail;
+
+        return $this;
+    }
+
+    /**
+     * Get mail
+     *
+     * @return string
+     */
+    public function getMail()
+    {
+        return $this->mail;
+    }
 }

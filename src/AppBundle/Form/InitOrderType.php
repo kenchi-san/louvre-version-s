@@ -2,9 +2,12 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Order;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,22 +19,21 @@ class InitOrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            //->add('createdAt')
             ->add('bookingDate', DateType::class, array(
 
                 'widget' => 'single_text'
             ))
-            ->add('qteOrder', \Symfony\Component\Form\Extension\Core\Type\IntegerType::class, ['attr' => ['min' => 0, 'max' => 10]])
-            ->add('typeOrder', ChoiceType::class, array(
-                'choices' => array(
-                    'journée' => "full-day",
-                    'demi-journée' => "half-day",
+            ->add('qteOrder', IntegerType::class, ['attr' => ['min' => 0, 'max' => 10]])
+            ->add('typeOrder', ChoiceType::class, [
+                'choices' => [
+                    'journée' => "jour plein",
+                    'demi-journée' => "demi-journée",
 
-                ),
-            ))
-            //->add('price')
-            //->add('bookingNumber')
-        ;
+                ],
+            ])
+        ->add('mail',EmailType::class, [
+                'label'=>'e-mail'
+            ]);
     }
 
     /**
@@ -40,7 +42,7 @@ class InitOrderType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Order'
+            'data_class' => Order::class
         ));
     }
 

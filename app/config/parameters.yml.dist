@@ -15,5 +15,7 @@ parameters:
     mailer_user: ~
     mailer_password: ~
 
+    stripe_secret_key: XXXXX
+    stripe_public_key:  XXXXX
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt

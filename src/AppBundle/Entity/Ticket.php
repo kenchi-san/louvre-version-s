@@ -49,12 +49,6 @@ class Ticket
      */
     private $birthday;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mail", type="string", length=255, unique=true)
-     */
-    private $mail;
 
 
     /**
@@ -73,7 +67,7 @@ class Ticket
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Order", inversedBy="tickets")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Order", inversedBy="tickets",cascade={"persist"})
      * @ORM\JoinColumn(name="order")
      */
     private $order;
@@ -185,40 +179,15 @@ class Ticket
         return $this->birthday;
     }
 
-    /**
-     * Set mail
-     *
-     * @param string $mail
-     *
-     * @return Ticket
-     */
-    public function setMail($mail)
-    {
-        $this->mail = $mail;
-
-        return $this;
-    }
-
-    /**
-     * Get mail
-     *
-     * @return string
-     */
-    public function getMail()
-    {
-        return $this->mail;
-    }
-
-
 
     /**
      * Get age
      *
      * @return int
      */
-    public function getAge($order)
+    public function getAge()
     {
-        return $this->getBirthday()->diff($order->getBookingDate())->y;
+        return $this->getBirthday()->diff($this->getOrder()->getBookingDate())->y;
 
     }
 
@@ -274,11 +243,11 @@ class Ticket
     /**
      * Set order
      *
-     * @param \AppBundle\Entity\Order $order
+     * @param Order $order
      *
      * @return Ticket
      */
-    public function setOrder(\AppBundle\Entity\Order $order)
+    public function setOrder(Order $order)
     {
         $this->order = $order;
 
@@ -288,7 +257,7 @@ class Ticket
     /**
      * Get order
      *
-     * @return \AppBundle\Entity\Order
+     * @return Order
      */
     public function getOrder()
     {

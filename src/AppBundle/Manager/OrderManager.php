@@ -28,18 +28,23 @@ class OrderManager
      */
     private $priceManager;
 
+    /**
+     * @var StripeManager
+     */
+    private $stripeManager;
 
-    public function __construct(SessionInterface $session, PriceManager $priceManager)
+    public function __construct(SessionInterface $session, PriceManager $priceManager, StripeManager $stripeManager)
     {
 
         $this->session = $session;
         $this->priceManager = $priceManager;
-
+        $this->stripeManager = $stripeManager;
 
     }
 
     /**
      * @return Order
+     * @throws \Exception
      */
     public function initOrder()
     {
@@ -92,6 +97,18 @@ class OrderManager
         } else {
             throw new NotFoundHttpException();
         }
+    }
+
+
+    /**
+     * @param Order $order
+     */
+    public function CurrentStripe()
+    {
+        
+         $this->stripeManager->stripePayement();
+
+
     }
 
 

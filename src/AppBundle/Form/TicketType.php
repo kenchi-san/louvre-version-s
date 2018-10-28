@@ -2,10 +2,13 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Ticket;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,18 +20,26 @@ class TicketType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstname')
-            ->add('lastname')
-            ->add('country', CountryType::class)
-            ->add('birthday', BirthdayType::class)
-            ->add('mail')
-            //->add('age')
-            //->add('price')
-            ->add('discount', CheckboxType::class, array(
+            ->add('firstname', TextType::class, [
+                'label'=>'Prénom'
+            ])
+            ->add('lastname',TextType::class, [
+                'label'=>'Nom'
+            ])
+            ->add('country', CountryType::class, [
+                'label'=>'Pays de résidence',
+                'placeholder' => 'France',
+            ])
+            ->add('birthday', BirthdayType::class, [
+                'label'=>'Date d\'anniversaire'
+            ])
+
+
+            ->add('discount', CheckboxType::class, [
                 'label'    => 'réduction',
                 'required' => false,
-            ))
-            //->add('order')
+            ])
+
         ;
     }/**
      * {@inheritdoc}
@@ -36,7 +47,7 @@ class TicketType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Ticket'
+            'data_class' => Ticket::class
         ));
     }
 

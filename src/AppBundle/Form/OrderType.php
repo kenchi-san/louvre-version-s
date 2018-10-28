@@ -2,10 +2,9 @@
 
 namespace AppBundle\Form;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Entity\Order;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,7 +20,9 @@ class OrderType extends AbstractType
             ->add('tickets',CollectionType::class, [
                 'entry_type' => TicketType::class,
         'allow_add' => true,
-                'entry_options'=>['label'=>false]
+                'entry_options'=>['label'=>false],
+
+
             ])
 
         ;
@@ -30,9 +31,9 @@ class OrderType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Order'
-        ));
+        $resolver->setDefaults([
+            'data_class' => Order::class
+        ]);
     }
 
     /**
