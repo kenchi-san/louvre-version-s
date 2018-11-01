@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Order
  *
- * @ORM\Table(name="order")
+ * @ORM\Table(name="louvre_order")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OrderRepository")
  *
  */
@@ -56,7 +56,7 @@ class Order
     /**
      * @var string
      *
-     * @ORM\Column(name="mail", type="string", length=255, unique=true)
+     * @ORM\Column(name="mail", type="string", length=255, unique=false)
      */
     private $mail;
     /**
@@ -74,7 +74,7 @@ class Order
     private $bookingNumber;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Ticket", mappedBy="order")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Ticket", mappedBy="order", cascade={"persist"})
      */
     private $tickets;
 

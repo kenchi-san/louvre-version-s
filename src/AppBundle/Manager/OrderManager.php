@@ -6,6 +6,9 @@ namespace AppBundle\Manager;
 
 use AppBundle\Entity\Order;
 use AppBundle\Entity\Ticket;
+use AppBundle\Services\MailerService;
+use AppBundle\Services\PaymentService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -23,23 +26,50 @@ class OrderManager
      */
     private $session;
 
+
+    /**
+     * @var PaymentService
+     */
+    private $paymentService;
     /**
      * @var PriceManager
      */
     private $priceManager;
+    /**
+     * @var MailerService
+     */
+    private $mailerService;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $manager;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
 
     /**
-     * @var StripeManager
+     * OrderManager constructor.
+     * @param SessionInterface $session
+     * @param PriceManager $priceManager
+     * @param PaymentService $paymentService
+     * @param MailerService $mailerService
+     * @param EntityManagerInterface $em
      */
-    private $stripeManager;
-
-    public function __construct(SessionInterface $session, PriceManager $priceManager, StripeManager $stripeManager)
+    public function __construct(
+        SessionInterface $session,
+        PriceManager $priceManager,
+        PaymentService $paymentService,
+        MailerService $mailerService,
+        EntityManagerInterface $em
+    )
     {
 
         $this->session = $session;
+        $this->paymentService = $paymentService;
         $this->priceManager = $priceManager;
-        $this->stripeManager = $stripeManager;
-
+        $this->mailerService = $mailerService;
+        $this->em = $em;
     }
 
     /**
@@ -102,13 +132,24 @@ class OrderManager
 
     /**
      * @param Order $order
+     * @return bool
      */
-    public function CurrentStripe()
+    public function doPayment(Order $order)
     {
-        
-         $this->stripeManager->stripePayement();
+        $referenceTransaction = $this->paymentService->doPayment(
+            $order->getPrice(),
+            "Votre commande de billet pour telle date"
+        );
 
 
+        if ($referenceTransaction) {
+            $this->mailerService->sendOrderConfirmation($order);
+$this->em->persist($order);
+$this->em->flush();
+            return true;
+        }
+
+        return false;
     }
 
 

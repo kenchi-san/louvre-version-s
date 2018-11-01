@@ -67,8 +67,7 @@ class Ticket
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Order", inversedBy="tickets",cascade={"persist"})
-     * @ORM\JoinColumn(name="order")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Order", inversedBy="tickets")
      */
     private $order;
 

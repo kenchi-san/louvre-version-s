@@ -5,6 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Form\InitOrderType;
 use AppBundle\Form\OrderType;
 use AppBundle\Manager\OrderManager;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,8 +27,7 @@ class DefaultController extends Controller
         $mail->setFrom("service-cleint@louvre.fr");
         $mail->setTo("toto@free.fr");
         $urlLogo = $mail->embed(\Swift_Image::fromPath('img/logo-louvre.jpg'));
-        $mail->setBody($this->renderView('email/confirmationBooking.html.twig',['logo'=>$urlLogo]), 'text/html');
-        //$mail->addPart(strip_tags($this->renderView('email/confirmationBooking.html.twig',['logo'=>$urlLogo])), 'text/plain');
+        $mail->setBody($this->renderView('email/confirmationBooking.html.twig', ['logo' => $urlLogo]), 'text/html');
 
 
         //$swift_Mailer->send($mail);
@@ -104,10 +105,11 @@ class DefaultController extends Controller
     public function resumeOrderAction(Request $request, OrderManager $orderManager)
     {
 
-
         $order = $orderManager->myCurrentOrder();
-        if ($request->isMethod('POST')) {
-           $orderManager->CurrentStripe($order);
+
+        if ($request->isMethod('POST') &&
+            $orderManager->doPayment($order)
+        ) {
             return $this->redirectToRoute('order_step_4');
         }
 

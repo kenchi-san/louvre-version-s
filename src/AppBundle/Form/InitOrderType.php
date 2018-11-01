@@ -23,7 +23,7 @@ class InitOrderType extends AbstractType
 
                 'widget' => 'single_text'
             ))
-            ->add('qteOrder', IntegerType::class, ['attr' => ['min' => 0, 'max' => 10]])
+            ->add('qteOrder', IntegerType::class, ['attr' => ['min' => 1, 'max' => 1000]])
             ->add('typeOrder', ChoiceType::class, [
                 'choices' => [
                     'journée' => "jour plein",
