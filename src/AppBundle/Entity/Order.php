@@ -6,6 +6,7 @@ use datetime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Validator\Constraints as MyAssert;
 
 /**
  * Order
@@ -34,8 +35,10 @@ class Order
 
     /**
      * @var DateTime
-     *
      * @ORM\Column(name="bookingDate", type="datetime")
+     * @MyAssert\NotTuesday()
+     * @MyAssert\PublicHoliday()
+     *
      */
     private $bookingDate;
 
@@ -55,7 +58,6 @@ class Order
 
     /**
      * @var string
-     *
      * @ORM\Column(name="mail", type="string", length=255, unique=false)
      */
     private $mail;

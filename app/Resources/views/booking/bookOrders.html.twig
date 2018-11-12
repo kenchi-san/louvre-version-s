@@ -18,13 +18,15 @@
                     </h2>
                     <p class="mb-0">
                         {{ form_start(form) }}
+
                         {{ form_row(form.bookingDate,{ 'label': 'Votre date de visite:' }) }}
-                        {{ form_errors(form.bookingDate) }}
-                        {{ form_widget(form.bookingDate) }}
+
+
                         {{ form_row(form.qteOrder,{ 'label': 'Nombre de personne:' }) }}
-                        {{ form_errors(form.qteOrder) }}
+
+
                         {{ form_row(form.typeOrder,{ 'label': 'type de journée:' }) }}
-                        {{ form_errors(form.typeOrder) }}
+
 
 
                         <button class="btn btn-success"> Etape suivante:</button>

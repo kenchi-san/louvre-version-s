@@ -118,16 +118,17 @@ class DefaultController extends Controller
             'stripe_public_key' => $this->getParameter('stripe_public_key')
         ]);
 
-
     }
 
     /**
      * @Route("/etape-4", name="order_step_4")
      */
-    public function stripeOrder()
+    public function stripeOrder(OrderManager $orderManager)
     {
 
-        return $this->render("booking/confirmation.html.twig");
+        return $this->render("email/confirmationBooking.html.twig",[
+            'confirmationMail'=>$orderManager->myCurrentOrder()
+        ]);
 
     }
 

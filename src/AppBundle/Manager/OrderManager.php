@@ -1,8 +1,6 @@
 <?php
 
-
 namespace AppBundle\Manager;
-
 
 use AppBundle\Entity\Order;
 use AppBundle\Entity\Ticket;
@@ -20,13 +18,10 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class OrderManager
 {
     const SESSION_ORDER_KEY = "SessionKey";
-
     /**
      * @var SessionInterface
      */
     private $session;
-
-
     /**
      * @var PaymentService
      */
@@ -39,10 +34,7 @@ class OrderManager
      * @var MailerService
      */
     private $mailerService;
-    /**
-     * @var EntityManagerInterface
-     */
-    private $manager;
+
     /**
      * @var EntityManagerInterface
      */
@@ -64,7 +56,6 @@ class OrderManager
         EntityManagerInterface $em
     )
     {
-
         $this->session = $session;
         $this->paymentService = $paymentService;
         $this->priceManager = $priceManager;
@@ -79,10 +70,7 @@ class OrderManager
     public function initOrder()
     {
         $order = new Order();
-
         $this->session->set(self::SESSION_ORDER_KEY, $order);
-
-
         return $order;
     }
 
@@ -95,13 +83,10 @@ class OrderManager
             if ($order->getTickets()->count() < $order->getQteOrder()) {
                 $order->addTicket(new Ticket());
             } else {
-
                 $order->getTickets();
-
             }
         }
     }
-
 
     /**
      * @param Order $order
@@ -109,9 +94,7 @@ class OrderManager
     public function computePrice(Order $order)
     {
         $this->priceManager->computeOrderPrice($order);
-
     }
-
 
     /**
      * @return Order
@@ -120,15 +103,12 @@ class OrderManager
     public function myCurrentOrder()
     {
         $order = $this->session->get(self::SESSION_ORDER_KEY);
-
-
         if ($order instanceof Order) {
             return $order;
         } else {
             throw new NotFoundHttpException();
         }
     }
-
 
     /**
      * @param Order $order
@@ -140,17 +120,13 @@ class OrderManager
             $order->getPrice(),
             "Votre commande de billet pour telle date"
         );
-
-
         if ($referenceTransaction) {
+
+            $this->em->persist($order);
+            $this->em->flush();
             $this->mailerService->sendOrderConfirmation($order);
-$this->em->persist($order);
-$this->em->flush();
             return true;
         }
-
         return false;
     }
-
-
 }

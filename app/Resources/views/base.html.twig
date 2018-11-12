@@ -17,6 +17,12 @@
         <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
         <!-- Custom styles for this template -->
         <link href="{{ asset('css/business-casual.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.standalone.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker3.min.css') }}">
+
+
 
 
 
@@ -50,7 +56,8 @@
                 </li>
 
                 <li class="nav-item px-lg-4">
-                    <a class="nav-link text-uppercase text-expanded" href="#">Nous contacter</a>
+                    <a class="nav-link text-uppercase text-expanded" href="{{ path('order_step_4') }}">Nous
+                        contacter</a>
                 </li>
 
 
@@ -130,4 +137,13 @@
     <script src="{{ asset('js/bootstrap.js') }}"></script>
 
 
+    <!--  -->
+    <script src="{{  asset('js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('js/datelined.js') }}"></script>
+
+
+
 {% endblock %}
+</body>
+</html>
+

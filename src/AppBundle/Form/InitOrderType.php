@@ -21,7 +21,11 @@ class InitOrderType extends AbstractType
         $builder
             ->add('bookingDate', DateType::class, array(
 
-                'widget' => 'single_text'
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'dd/mm/yyyy',
+
+
             ))
             ->add('qteOrder', IntegerType::class, ['attr' => ['min' => 1, 'max' => 1000]])
             ->add('typeOrder', ChoiceType::class, [
@@ -31,8 +35,8 @@ class InitOrderType extends AbstractType
 
                 ],
             ])
-        ->add('mail',EmailType::class, [
-                'label'=>'e-mail'
+            ->add('mail', EmailType::class, [
+                'label' => 'e-mail'
             ]);
     }
 

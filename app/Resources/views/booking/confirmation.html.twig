@@ -1,10 +1,25 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h1>Bravo !</h1>
+    <section class="page-section cta">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+                    <div class="cta-inner text-center rounded">
+
+                        <h2>Merci pour votre réservation. Vous allez être redirigé vers la page d'accueil.</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
 {% endblock %}
 
 {% block accueil %}
-
+    <li class="nav-item px-lg-4"><a
+                class="nav-link text-uppercase text-expanded"
+                href="{{ path('homepage') }}">retour à l'accueil</a></li>
 {% endblock %}
 
