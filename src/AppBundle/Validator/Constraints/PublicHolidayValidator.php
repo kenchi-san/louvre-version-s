@@ -25,9 +25,10 @@ class PublicHolidayValidator extends ConstraintValidator
         if (!$value instanceof \DateTime) {
             $value = new \DateTime($value);
         }
-        $holidays = $this->getHolidays();
 
-        if (in_array($value->format('Y/m/d'), $holidays)) {
+        $holiday = $this->getHolidays();
+
+        if (in_array($value->format('m/d/Y'), $holiday)) {
             $this->context->addViolation($constraint->message);
 
         }
@@ -49,14 +50,14 @@ class PublicHolidayValidator extends ConstraintValidator
         $easterYear = date('Y', $easterDate);
 
         $holidays = [
-            mktime(0, 0, 0, 1, 1, $year),
-            mktime(0, 0, 0, 5, 8, $year),
-            mktime(0, 0, 0, 7, 14, $year),
-            mktime(0, 0, 0, 8, 15, $year),
-            mktime(0, 0, 0, 11, 11, $year),
-            mktime(0, 0, 0, $easterMonth, $easterDay + 1, $easterYear),
-            mktime(0, 0, 0, $easterMonth, $easterDay + 39, $easterYear),
-            mktime(0, 0, 0, $easterMonth, $easterDay + 50, $easterYear),
+            date("m/d/Y", mktime(0, 0, 0, 1, 1, $year)),
+            date("m/d/Y", mktime(0, 0, 0, 5, 8, $year)),
+            date("m/d/Y", mktime(0, 0, 0, 7, 14, $year)),
+            date("m/d/Y", mktime(0, 0, 0, 8, 15, $year)),
+            date("m/d/Y", mktime(0, 0, 0, 11, 11, $year)),
+            date("m/d/Y", mktime(0, 0, 0, $easterMonth, $easterDay + 1, $easterYear)),
+            date("m/d/Y", mktime(0, 0, 0, $easterMonth, $easterDay + 39, $easterYear)),
+            date("m/d/Y", mktime(0, 0, 0, $easterMonth, $easterDay + 50, $easterYear)),
         ];
 
         return $holidays;

@@ -2,18 +2,18 @@
 /**
  * Created by PhpStorm.
  * User: charo
- * Date: 06/11/2018
- * Time: 15:17
+ * Date: 14/11/2018
+ * Time: 00:37
  */
 
 namespace AppBundle\Validator\Constraints;
 
+
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class NotTuesdayValidator extends ConstraintValidator
+class NotSundayValidator extends ConstraintValidator
 {
-
     /**
      * Checks if the passed value is valid.
      *
@@ -22,12 +22,12 @@ class NotTuesdayValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if(!$constraint instanceof NotTuesday){
+        if(!$constraint instanceof NotSunday){
             return;
         }
 
 
-        if($value->format('w') == 2){
+        if($value->format('w') == 0){
             $this->context->addViolation($constraint->message);
         }
     }

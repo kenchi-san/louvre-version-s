@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use Doctrine\ORM\QueryBuilder;
+
 /**
  * OrderRepository
  *
@@ -10,4 +12,36 @@ namespace AppBundle\Repository;
  */
 class OrderRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function whereCurrentYear(QueryBuilder $qb)
+    {
+        $qb
+            ->andWhere('o.bookingDate BETWEEN :start AND :end')
+            ->setParameter('start', new \Datetime(date('Y') . '-01-01'))// Date entre le 1er janvier de cette année
+            ->setParameter('end', new \Datetime(date('Y') . '-12-31'))  // Et le 31 décembre de cette année
+        ;
+    }
+
+    public function myFind()
+    {
+        $qb = $this->createQueryBuilder('o');
+
+        // On peut ajouter ce qu'on veut avant
+        $qb
+            ->where('o.qteOrder = :qteOrder')
+            ->setParameter('qteOrder', '3')
+        ;
+
+        // On applique notre condition sur le QueryBuilder
+        $this->whereCurrentYear($qb);
+
+        // On peut ajouter ce qu'on veut après
+        $qb->orderBy('o.bookingDate', 'DESC');
+
+        return $qb
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
 }

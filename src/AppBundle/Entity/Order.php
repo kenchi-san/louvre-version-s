@@ -13,6 +13,7 @@ use AppBundle\Validator\Constraints as MyAssert;
  *
  * @ORM\Table(name="louvre_order")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OrderRepository")
+ * @MyAssert\FullQteBooking()
  *
  */
 class Order
@@ -29,7 +30,7 @@ class Order
     /**
      * @var DateTime
      *
-     * @ORM\Column(name="createdAt", type="datetime", unique=true)
+     * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
 
@@ -38,6 +39,7 @@ class Order
      * @ORM\Column(name="bookingDate", type="datetime")
      * @MyAssert\NotTuesday()
      * @MyAssert\PublicHoliday()
+     *@MyAssert\NotSunday()
      *
      */
     private $bookingDate;

@@ -5,8 +5,6 @@ namespace AppBundle\Controller;
 use AppBundle\Form\InitOrderType;
 use AppBundle\Form\OrderType;
 use AppBundle\Manager\OrderManager;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,20 +15,20 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="homepage")
-     * @param \Swift_Mailer $swift_Mailer
      * @return Response
      */
-    public function index(\Swift_Mailer $swift_Mailer)
+    public function index()
     {
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('AppBundle:Order')
+        ;
 
-        $mail = new \Swift_Message("Confirmation de votre commande");
-        $mail->setFrom("service-cleint@louvre.fr");
-        $mail->setTo("toto@free.fr");
-        $urlLogo = $mail->embed(\Swift_Image::fromPath('img/logo-louvre.jpg'));
-        $mail->setBody($this->renderView('email/confirmationBooking.html.twig', ['logo' => $urlLogo]), 'text/html');
+        $listAdverts = $repository->myFind();
 
 
-        //$swift_Mailer->send($mail);
+        dump($listAdverts);die();
         return $this->render('booking/index.html.twig');
 
     }
@@ -56,7 +54,9 @@ class DefaultController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $orderManager->generatingEmptyTickets($order);
+
             return $this->redirectToRoute("order_step_2");
+
 
         }
 
@@ -110,6 +110,7 @@ class DefaultController extends Controller
         if ($request->isMethod('POST') &&
             $orderManager->doPayment($order)
         ) {
+
             return $this->redirectToRoute('order_step_4');
         }
 
@@ -122,6 +123,8 @@ class DefaultController extends Controller
 
     /**
      * @Route("/etape-4", name="order_step_4")
+     * @param OrderManager $orderManager
+     * @return Response
      */
     public function stripeOrder(OrderManager $orderManager)
     {

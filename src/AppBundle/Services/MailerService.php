@@ -37,9 +37,9 @@ class MailerService
         $mail = new \Swift_Message("Confirmation de votre commande");
         $mail->setFrom($this->louvreMail);
         $mail->setTo($order->getMail());
-
+        $urlLogo = $mail->embed(\Swift_Image::fromPath('img/logo-louvre.jpg'));
         try {
-            $mail->setBody($this->twig->render('email/confirmationBooking.html.twig'), 'text/html', $img);
+            $mail->setBody($this->twig->render('email/confirmationBooking.html.twig',['logo' => $urlLogo]), 'text/html');
 
         } catch (\Twig_Error_Loader $e) {
         } catch (\Twig_Error_Runtime $e) {

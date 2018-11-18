@@ -22,8 +22,9 @@ class InitOrderType extends AbstractType
             ->add('bookingDate', DateType::class, array(
 
                 'widget' => 'single_text',
-                'html5' => false,
+                /*'html5' => false,
                 'format' => 'dd/mm/yyyy',
+                'attr' => ['class' => 'js-datepicker'],*/
 
 
             ))
