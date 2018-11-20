@@ -19,16 +19,7 @@ class DefaultController extends Controller
      */
     public function index()
     {
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('AppBundle:Order')
-        ;
 
-        $listAdverts = $repository->myFind();
-
-
-        dump($listAdverts);die();
         return $this->render('booking/index.html.twig');
 
     }

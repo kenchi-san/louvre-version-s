@@ -14,10 +14,14 @@ use AppBundle\Validator\Constraints as MyAssert;
  * @ORM\Table(name="louvre_order")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OrderRepository")
  * @MyAssert\FullQteBooking()
+ * @MyAssert\HalfDay()
  *
  */
 class Order
 {
+    const MAX_TICKET_PER_DAY = 1000;
+    const HALF_DAY_HOUR_LIMIT = 17;
+
     /**
      * @var int
      *
