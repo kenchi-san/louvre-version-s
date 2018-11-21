@@ -10,6 +10,7 @@ namespace AppBundle\Services;
 
 
 use AppBundle\Entity\Order;
+use AppBundle\Manager\OrderManager;
 use Twig\Environment;
 
 class MailerService
@@ -38,13 +39,10 @@ class MailerService
         $mail->setFrom($this->louvreMail);
         $mail->setTo($order->getMail());
         $urlLogo = $mail->embed(\Swift_Image::fromPath('img/logo-louvre.jpg'));
-        try {
-            $mail->setBody($this->twig->render('email/confirmationBooking.html.twig',['logo' => $urlLogo]), 'text/html');
 
-        } catch (\Twig_Error_Loader $e) {
-        } catch (\Twig_Error_Runtime $e) {
-        } catch (\Twig_Error_Syntax $e) {
-        }
+            $mail->setBody($this->twig->render('email/confirmationBooking.html.twig', ['logo' => $urlLogo,'confirmationMail'=>$order]), 'text/html');
+
+
 
         $this->mailer->send($mail);
 

@@ -20,7 +20,7 @@ use AppBundle\Validator\Constraints as MyAssert;
 class Order
 {
     const MAX_TICKET_PER_DAY = 1000;
-    const HALF_DAY_HOUR_LIMIT = 17;
+    const HALF_DAY_HOUR_LIMIT = 12;
 
     /**
      * @var int

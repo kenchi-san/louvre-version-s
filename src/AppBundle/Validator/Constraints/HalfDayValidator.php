@@ -10,36 +10,38 @@ namespace AppBundle\Validator\Constraints;
 
 
 use AppBundle\Entity\Order;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 class HalfDayValidator extends ConstraintValidator
 {
-
-
     /**
      * @var EntityManagerInterface
      */
-    private $em;
+    private $entityManager;
 
-    public function __construct(EntityManagerInterface $em)
-    {
+    public function __construct(EntityManagerInterface $entityManager)
+{
 
-        $this->em = $em;
-    }
+    $this->entityManager = $entityManager;
+}
 
     /**
      * Checks if the passed value is valid.
      *
-     * @param $order
+     * @param $objet
      * @param Constraint $constraint The constraint for the validation
      */
-    public function validate($order, Constraint $constraint)
+    public function validate($objet, Constraint $constraint)
     {
         $currentHour = date('H');
         $currentday = date("Y/m/d");
+
+  /*  if ($dateLimite = $this->getDate()->add(new \DateInterval('P6M')))
+        ;
+        return $dateLimite->format('d-m-Y');
+*/
 
         if ($currentHour > Order::HALF_DAY_HOUR_LIMIT
         // TODO l'utilisateura choisi la date d'aujourd'hui  &&
@@ -47,9 +49,10 @@ class HalfDayValidator extends ConstraintValidator
 
 
         ) {
-            $this->context->buildViolation($constraint->message)
+//dump($currentday);die();
+            /*$this->context->buildViolation($constraint->message)
                 ->atPath('bookingDate')
-                ->addViolation();
+                ->addViolation();*/
         }
     }
 }

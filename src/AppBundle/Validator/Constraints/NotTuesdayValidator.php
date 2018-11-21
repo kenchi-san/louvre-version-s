@@ -22,13 +22,13 @@ class NotTuesdayValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        /*if(!$constraint instanceof NotTuesday){
+        if(!$constraint instanceof NotTuesday){
             return;
         }
 
 
         if($value->format('w') == 2){
             $this->context->addViolation($constraint->message);
-        }*/
+        }
     }
 }
