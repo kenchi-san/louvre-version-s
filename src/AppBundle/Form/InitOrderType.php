@@ -21,11 +21,7 @@ class InitOrderType extends AbstractType
         $builder
             ->add('bookingDate', DateType::class, array(
 
-                'widget' => 'single_text',
-                /*'html5' => false,
-                'format' => 'dd/mm/yyyy',
-                'attr' => ['class' => 'js-datepicker'],*/
-
+                'widget' => 'single_text'
 
             ))
             ->add('qteOrder', IntegerType::class, ['attr' => ['min' => 1, 'max' => 1000]])

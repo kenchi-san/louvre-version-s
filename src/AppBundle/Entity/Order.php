@@ -20,7 +20,7 @@ use AppBundle\Validator\Constraints as MyAssert;
 class Order
 {
     const MAX_TICKET_PER_DAY = 1000;
-    const HALF_DAY_HOUR_LIMIT = 12;
+    const HALF_DAY_HOUR_LIMIT = 14;
 
     /**
      * @var int
@@ -41,9 +41,11 @@ class Order
     /**
      * @var DateTime
      * @ORM\Column(name="bookingDate", type="datetime")
+     * @Assert\Range(min ="midnight",minMessage="Nous ne proposons pas de voyage dans le temps, veuillez celectionner une date valide")
      * @MyAssert\NotTuesday()
      * @MyAssert\PublicHoliday()
-     *@MyAssert\NotSunday()
+     * @MyAssert\NotSunday()
+     *
      *
      */
     private $bookingDate;

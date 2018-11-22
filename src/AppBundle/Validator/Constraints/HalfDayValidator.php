@@ -22,37 +22,35 @@ class HalfDayValidator extends ConstraintValidator
     private $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)
-{
+    {
 
-    $this->entityManager = $entityManager;
-}
+        $this->entityManager = $entityManager;
+    }
 
     /**
      * Checks if the passed value is valid.
      *
-     * @param $objet
+     * @param $order
      * @param Constraint $constraint The constraint for the validation
      */
-    public function validate($objet, Constraint $constraint)
+    public function validate($order, Constraint $constraint)
     {
+        if (!$order instanceof Order) {
+            return;
+        }
         $currentHour = date('H');
         $currentday = date("Y/m/d");
+        $CreatedAt = $order->getBookingDate()->format("Y/m/d");
+        $TypeOrder = $order->getTypeOrder();
 
-  /*  if ($dateLimite = $this->getDate()->add(new \DateInterval('P6M')))
-        ;
-        return $dateLimite->format('d-m-Y');
-*/
-
-        if ($currentHour > Order::HALF_DAY_HOUR_LIMIT
-        // TODO l'utilisateura choisi la date d'aujourd'hui  &&
-            // TODO l'utilisateur a choisi FULL_DAY
+        if ($currentday === $CreatedAt && $currentHour > Order::HALF_DAY_HOUR_LIMIT && $TypeOrder === "jour plein"
 
 
         ) {
-//dump($currentday);die();
-            /*$this->context->buildViolation($constraint->message)
+
+            $this->context->buildViolation($constraint->message)
                 ->atPath('bookingDate')
-                ->addViolation();*/
+                ->addViolation();
         }
     }
 }
