@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Business Casual - Start Bootstrap Theme</title>
+    <title>Musée du louvre</title>
     {% block stylesheets %}
 
         <!-- Bootstrap core CSS -->
@@ -18,7 +18,6 @@
         <!-- Custom styles for this template -->
         <link href="{{ asset('css/business-casual.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <link rel="stylesheet" href="{{ asset('css/gijgo.min.css') }}">
 
 
 
@@ -31,7 +30,7 @@
 <body>
 
 <h1 class="site-heading text-center text-white d-none d-lg-block">
-    <span class="site-heading-upper text-primary mb-3">Bienvenu sur la platform de réservation du Louvre</span>
+    <span class="site-heading-upper text-primary mb-3">Bienvenue sur la platform de réservation du Louvre</span>
 
 </h1>
 
@@ -55,7 +54,7 @@
                 </li>
 
                 <li class="nav-item px-lg-4">
-                    <a class="nav-link text-uppercase text-expanded" href="{{ path('order_step_4') }}">Nous
+                    <a class="nav-link text-uppercase text-expanded" href="{{ path('contact') }}">Nous
                         contacter</a>
                 </li>
 
@@ -134,12 +133,6 @@
     <!-- Bootstrap core JavaScript -->
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
-
-
-    <!--  -->
-    <script src="{{  asset('js/gijgo.min.js') }}"></script>
-    <script src="{{ asset('js/datelined.js') }}"></script>
-
 
 
 {% endblock %}

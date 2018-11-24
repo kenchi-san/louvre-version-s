@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <style>
+
+        .decologo {
+            padding-bottom: 5%;
+            width: 300px;
+            height: 200px;
+        }
+
+        .container {
+            margin: 20%;
+        }
+
+        .resume {
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+        .infoMuseum {
+            float: right;
+        }
+
+        .content {
+            text-align: -webkit-center;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="top">
+        <div class="infoMuseum">
+            <h3>Musée du Louvre</h3>
+            <br>
+            Adresse Postal : Rue de Rivoli, 75001 Paris<br>
+            numéro de téléphone : 01 40 20 50 50<br>
+            e-mail: Info.client@museedulouvre.com<br>
+        </div>
+        <div class="logo">
+            <img src="{{ absolute_url(asset('img/logo-louvre.jpg')) }}" class="decologo">
+
+        </div>
+    </div>
+    <div class="resume">
+        <!--resume Order -->
+        <div class="content">
+            Information Client:
+            <br>
+            Nom : {{ GuestQuestion.name }}
+            <br>
+            Prénom : {{ GuestQuestion.lastname }}
+            <br>
+            E-Mail :{{ GuestQuestion.mail }}
+            <p>
+                Monsieur/ Madame {{ GuestQuestion.name }} {{ GuestQuestion.lastname }} vous a soumis la demande suivante
+                :
+                <br>
+                {{ GuestQuestion.message }}
+
+            </p>
+
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+

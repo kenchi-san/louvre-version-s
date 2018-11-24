@@ -2,8 +2,11 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\ContactUs;
+use AppBundle\Form\ContactUsType;
 use AppBundle\Form\InitOrderType;
 use AppBundle\Form\OrderType;
+use AppBundle\Manager\ContactManager;
 use AppBundle\Manager\OrderManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -22,8 +25,36 @@ class DefaultController extends Controller
 
         return $this->render('booking/index.html.twig');
 
+
     }
 
+    /**
+     * @Route("/contact", name="contact")
+     * @param ContactManager $contactManager
+     * @return Response
+     */
+public function contactUs(ContactManager $contactManager, Request $request){
+
+   $contactUs=$contactManager->initContact();
+    $form = $this->createForm(ContactUsType::class, $contactUs);
+
+
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+
+        $contactManager->sendTheMailFromGuest($contactUs);
+        //$orderManager->generatingEmptyTickets($order);
+        return $this->redirectToRoute("homepage");
+
+
+
+    }
+    return $this->render('email/contact.html.twig', [
+        'form' => $form->createView()
+    ]);
+}
 
     /**
      * @Route("/booking", name="reservation")
@@ -76,7 +107,6 @@ class DefaultController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $orderManager->computePrice($order);
-            //dump($orderManager);die();
 
             return $this->redirectToRoute("order_step_3");
 

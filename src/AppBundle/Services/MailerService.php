@@ -9,8 +9,8 @@
 namespace AppBundle\Services;
 
 
+use AppBundle\Entity\ContactUs;
 use AppBundle\Entity\Order;
-use AppBundle\Manager\OrderManager;
 use Twig\Environment;
 
 class MailerService
@@ -47,6 +47,19 @@ class MailerService
         $this->mailer->send($mail);
 
 
+    }
+
+    public function sendTheQuestionByMail(ContactUs $contactUs){
+        $mail = new \Swift_Message("Demande Client");
+        $mail->setFrom($contactUs->getMail());
+        $mail->setTo($this->louvreMail);
+        $urlLogo = $mail->embed(\Swift_Image::fromPath('img/logo-louvre.jpg'));
+
+        $mail->setBody($this->twig->render('email/GuestQuestion.html.twig', ['logo' => $urlLogo,'GuestQuestion'=>$contactUs]), 'text/html');
+
+
+
+        $this->mailer->send($mail);
     }
 
 }
