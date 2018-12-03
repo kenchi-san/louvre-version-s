@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\ContactUs;
 use AppBundle\Form\ContactUsType;
 use AppBundle\Form\InitOrderType;
 use AppBundle\Form\OrderType;
@@ -22,7 +21,6 @@ class DefaultController extends Controller
      */
     public function index()
     {
-
         return $this->render('booking/index.html.twig');
 
 
@@ -31,30 +29,30 @@ class DefaultController extends Controller
     /**
      * @Route("/contact", name="contact")
      * @param ContactManager $contactManager
+     * @param Request $request
      * @return Response
      */
-public function contactUs(ContactManager $contactManager, Request $request){
+    public function contactUs(ContactManager $contactManager, Request $request)
+    {
 
-   $contactUs=$contactManager->initContact();
-    $form = $this->createForm(ContactUsType::class, $contactUs);
-
-
-
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) {
-
-        $contactManager->sendTheMailFromGuest($contactUs);
-        //$orderManager->generatingEmptyTickets($order);
-        return $this->redirectToRoute("homepage");
+        $contactUs = $contactManager->initContact();
+        $form = $this->createForm(ContactUsType::class, $contactUs);
 
 
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $contactManager->sendTheMailFromGuest($contactUs);
+            //$orderManager->generatingEmptyTickets($order);
+            return $this->redirectToRoute("homepage");
+
+
+        }
+        return $this->render('email/contact.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
-    return $this->render('email/contact.html.twig', [
-        'form' => $form->createView()
-    ]);
-}
 
     /**
      * @Route("/booking", name="reservation")
@@ -70,7 +68,6 @@ public function contactUs(ContactManager $contactManager, Request $request){
         $order = $orderManager->initOrder();
 
         $form = $this->createForm(InitOrderType::class, $order);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -127,12 +124,12 @@ public function contactUs(ContactManager $contactManager, Request $request){
     {
 
         $order = $orderManager->myCurrentOrder();
-
-        if ($request->isMethod('POST') &&
-            $orderManager->doPayment($order)
-        ) {
-
-            return $this->redirectToRoute('order_step_4');
+        if ($request->isMethod('POST')){
+            if($orderManager->doPayment($order)){
+                return $this->redirectToRoute('order_step_4');
+            }else{
+                $this->addFlash('danger','Un problème est survenu merci de rééssayer');
+            }
         }
 
         return $this->render("booking/resumeBooking.html.twig", [
@@ -147,12 +144,13 @@ public function contactUs(ContactManager $contactManager, Request $request){
      * @param OrderManager $orderManager
      * @return Response
      */
-    public function stripeOrder(OrderManager $orderManager)
+    public function confirmationOrder(OrderManager $orderManager)
     {
 
-        return $this->render("email/confirmationBooking.html.twig",[
-            'confirmationMail'=>$orderManager->myCurrentOrder()
-        ]);
+        $order = $orderManager->myCurrentOrder();
+
+
+        return $this->render("booking/confirmation.html.twig",['confirmationOrder'=>$order]);
 
     }
 

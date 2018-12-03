@@ -69,7 +69,9 @@ class OrderManager
      */
     public function initOrder()
     {
+
         $order = new Order();
+
         $this->session->set(self::SESSION_ORDER_KEY, $order);
         return $order;
     }
@@ -120,8 +122,9 @@ class OrderManager
             $order->getPrice(),
             "Votre commande de billet pour telle date"
         );
+        // dump($referenceTransaction);die();
         if ($referenceTransaction) {
-
+            $order->setBookingNumber($referenceTransaction);
             $this->em->persist($order);
             $this->em->flush();
             $this->mailerService->sendOrderConfirmation($order);

@@ -8,11 +8,13 @@ use Symfony\Component\Validator\Tests\Fixtures\ConstraintAValidator;
 
 /**
  * Class PriceManager
- * Calcule le prix d'une commande ou d'un ticket en fonction de la date de visite et de l'age
+ *
  * @package AppBundle\Manager
  */
 class PriceManager extends ConstraintAValidator
 {
+
+
     const PRIX_BEBE = 0;
     const PRIX_NORMAL = 16;
     const PRIX_ENFANT = 8;
@@ -50,12 +52,14 @@ class PriceManager extends ConstraintAValidator
 
 
     /**
+     * Calcul le prix d'un ticket en fonction de la date/durée de la visite et de l'application du tarif réduit
+     *
      * @param Ticket $ticket
      * @return int
      */
     public function computeTicketPrice(Ticket $ticket)
     {
-        if ($ticket->getOrder()->getTypeOrder() === "jour plein") {
+        if ($ticket->getOrder()->getTypeOrder() === Order::TYPE_FULL_DAY) {
             if ($ticket->getDiscount()) {
                 $price = (self::PRIX_REDUIT);
             } elseif ($ticket->getAge() < self::AGE_ENFANT) {

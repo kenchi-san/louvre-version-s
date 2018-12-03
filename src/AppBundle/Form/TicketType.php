@@ -27,7 +27,8 @@ class TicketType extends AbstractType
             ])
             ->add('country', CountryType::class, [
                 'label'=>'Pays de résidence',
-                'placeholder' => 'FR',
+                'preferred_choices' => array('FR'),
+
             ])
             ->add('birthday', BirthdayType::class, [
                 'label'=>'Date d\'anniversaire'

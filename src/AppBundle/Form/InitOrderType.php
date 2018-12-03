@@ -27,8 +27,8 @@ class InitOrderType extends AbstractType
             ->add('qteOrder', IntegerType::class, ['attr' => ['min' => 1, 'max' => 1000]])
             ->add('typeOrder', ChoiceType::class, [
                 'choices' => [
-                    'journée' => "jour plein",
-                    'demi-journée' => "demi-journée",
+                    Order::TYPE_FULL_DAY => "jour plein",
+                    Order::TYPE_HALF_DAY => "demi-journée",
 
                 ],
             ])

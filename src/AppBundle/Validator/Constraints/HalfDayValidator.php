@@ -40,14 +40,13 @@ class HalfDayValidator extends ConstraintValidator
         }
         $currentHour = date('H');
         $currentday = date("Y/m/d");
-        $CreatedAt = $order->getBookingDate()->format("Y/m/d");
-        $TypeOrder = $order->getTypeOrder();
+        $createdAt = $order->getBookingDate()->format("Y/m/d");
+        $typeOrder = $order->getTypeOrder();
 
-        if ($currentday === $CreatedAt && $currentHour > Order::HALF_DAY_HOUR_LIMIT && $TypeOrder === "jour plein"
-
-
+        if ($currentday === $createdAt &&
+            $currentHour > Order::HALF_DAY_HOUR_LIMIT &&
+            $typeOrder === Order::TYPE_FULL_DAY
         ) {
-
             $this->context->buildViolation($constraint->message)
                 ->atPath('bookingDate')
                 ->addViolation();

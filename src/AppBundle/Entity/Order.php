@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Manager\OrderManager;
+use AppBundle\Services\PaymentService;
 use datetime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,6 +23,8 @@ class Order
 {
     const MAX_TICKET_PER_DAY = 1000;
     const HALF_DAY_HOUR_LIMIT = 14;
+    const TYPE_FULL_DAY = "jour plein";
+    const TYPE_HALF_DAY = "demi-journée";
 
     /**
      * @var int
@@ -91,13 +95,12 @@ class Order
 
     /**
      * Constructor
-     * @throws \Exception
      */
     public function __construct()
     {
         $this->tickets = new ArrayCollection();
         $this->setCreatedAt(new datetime());
-        $this->bookingNumber = md5(random_bytes(10));
+       // $this->setBookingNumber(md5(random_bytes(10)));
     }
 
     /**
@@ -288,7 +291,15 @@ class Order
         return $this->tickets;
     }
 
-
+    /**
+     * Get mail
+     *
+     * @return string
+     */
+    public function getMail()
+    {
+        return $this->mail;
+    }
 
     /**
      * Set mail
@@ -302,15 +313,5 @@ class Order
         $this->mail = $mail;
 
         return $this;
-    }
-
-    /**
-     * Get mail
-     *
-     * @return string
-     */
-    public function getMail()
-    {
-        return $this->mail;
     }
 }

@@ -30,21 +30,22 @@
         }
 
         .content {
-            text-align: -webkit-center;
+            text-align: left;
         }
 
         table {
             border-collapse: collapse;
+
         }
 
-        td {
+        /*td {
             border: 1px solid black;
         }
 
         tfoot {
             border: 1px solid black;
 
-        }
+        }*/
 
     </style>
 </head>
@@ -106,68 +107,76 @@
                         {% endfor %}
 
                     </td>
-
-
+                <tr>
+                    <td>
+                        Date de réservation : {{ confirmationMail.bookingDate |date("d/m/Y") }}
+                    </td>
                 </tr>
+                <tr>
+                    <td>
+                        Type de réservation : {{ confirmationMail.typeOrder }}
+                    </td>
+                </tr>
+
                 <tr>
                     <td>
                         Numéro de réservation : {{ confirmationMail.bookingNumber }}
                     </td>
                 </tr>
 
+
                 </tbody>
                 <tfoot>
                 <tr>
                     <th>
                         Prix Total :{{ confirmationMail.price }}€
-                    </td>
+                    </th>
 
                 </tr>
 
                 </tfoot>
             </table>
             <table>
-                <td>
-                    <tr>
-                        <th>
-                            {% for ticket in confirmationMail.tickets %}
-                                {% if ticket.price == 10 %}
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-xl-9 mx-auto">
-                                                <div class="cta-inner text-center rounded">
-                                                    * Le tarif réduit est réservé pour les étudiant, employé du
-                                                    musée,service du
-                                                    Ministère
-                                                    de la Culture, militaire….
-                                                    <br>
-                                                    A votre arrivé au musée, un justificatif vous sera demandé.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% elseif ticket.price == 5 %}
-                                    <div class="contain">
-                                        <div class="row">
-                                            <div class="col-xl-9 mx-auto">
-                                                <div class="cta-inner text-center rounded">
-                                                    * Le tarif réduit est réservé pour les étudiant, employé du
-                                                    musée,service du
-                                                    Ministère
-                                                    de la Culture, militaire….
-                                                    <br>
-                                                    A votre arrivé au musée, un justificatif vous sera demandé.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% else %}
 
-                                {% endif %}
-                            {% endfor %}
-                        </th>
-                    </tr>
-                </td>
+                <tr>
+                    <th>
+                        {% for ticket in confirmationMail.tickets %}
+                            {% if ticket.price == 10 %}
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-xl-9 mx-auto">
+                                            <div class="cta-inner text-center rounded">
+                                                * Le tarif réduit est réservé pour les étudiant, employé du
+                                                musée,service du
+                                                Ministère
+                                                de la Culture, militaire….
+                                                <br>
+                                                A votre arrivé au musée, un justificatif vous sera demandé.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% elseif ticket.price == 5 %}
+                                <div class="contain">
+                                    <div class="row">
+                                        <div class="col-xl-9 mx-auto">
+                                            <div class="cta-inner text-center rounded">
+                                                * Le tarif réduit est réservé pour les étudiant, employé du
+                                                musée,service du
+                                                Ministère
+                                                de la Culture, militaire….
+                                                <br>
+                                                A votre arrivé au musée, un justificatif vous sera demandé.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+
+                            {% endif %}
+                        {% endfor %}
+                    </th>
+                </tr>
             </table>
 
         </div>

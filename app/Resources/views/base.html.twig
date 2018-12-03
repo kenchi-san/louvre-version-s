@@ -65,9 +65,20 @@
 </nav>
 
 {% block body %}
+
     {% block prixPhoto %}
         <section class="page-section clearfix">
             <div class="container">
+                {% for type, messages in app.flashes %}
+                    <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
                 <div class="intro">
                     <img class="intro-img img-fluid mb-3 mb-lg-0 rounded"
                          src="{{ asset('img/reception.jpg') }}" alt="">
