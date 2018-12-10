@@ -16,7 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 class PriceManagerTest extends TestCase
 {
-    //const COEF_DEMI_JOURNEE = 0.5;
 
     /**
      */
