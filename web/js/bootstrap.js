@@ -4,7 +4,7 @@
  * Licensed under the MIT license
  */
 
-if (typeof jQuery === 'undefined') {
+if (typeof jQuery === 'undefined') {<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
   throw new Error('Bootstrap\'s JavaScript requires jQuery')
 }
 
