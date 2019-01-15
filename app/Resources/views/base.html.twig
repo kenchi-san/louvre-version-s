@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -21,6 +21,7 @@
         <!-- Custom styles for this template -->
         <link href="{{ asset('css/business-casual.css') }}" rel="stylesheet">
         <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
+        <link href="{{ asset('css/child-theme.css') }}" rel="stylesheet">
 
     {% endblock %}
 </head>
@@ -88,14 +89,14 @@
                             <span class="section-heading-upper">Tarifs</span>
 
                         </h2>
-                        <p class="mb-3">Plein tarif | à partir de 12 ans | 16 €<br>
+                        <p class="mb-3">Plein tarif | à partir de 12 ans | {{ constant('AppBundle\\Manager\\PriceManager::PRIX_NORMAL') }} €<br>
 
 
-                            Tarif senior | à partir de 60 ans | 12 €<br>
+                            Tarif senior | à partir de 60 ans | {{ constant('AppBundle\\Manager\\PriceManager::PRIX_SENIOR') }} €<br>
 
-                            Tarif enfant | de 4 à 12 ans | 8 €<br>
+                            Tarif enfant | de 4 à 12 ans | {{ constant('AppBundle\\Manager\\PriceManager::PRIX_ENFANT') }} €<br>
 
-                            Tarif réduit | sur présentation de justificatifs | 10 €<br>
+                            Tarif réduit | sur présentation de justificatifs | {{ constant('AppBundle\\Manager\\PriceManager::PRIX_REDUIT') }} €<br>
                         </p>
                         <div class="intro-button mx-auto">
                             <a class="btn btn-primary btn-xl" href="{{ path('reservation') }}">Réservation</a>

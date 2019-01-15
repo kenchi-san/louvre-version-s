@@ -1,0 +1,10 @@
+.invalid-feedback{
+    display: none;
+    width: 100%;
+    font-size: 80%;
+    color: #0e0d0d;
+    background-color: red;
+    padding-right: 2em;
+    padding-left: 2em;
+    border-radius: 5px;
+}
