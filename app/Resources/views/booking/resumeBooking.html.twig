@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+{% block accueil %}
+
+    <li class="nav-item px-lg-4"><a
+                class="nav-link text-uppercase text-expanded"
+                href="{{ path('homepage') }}">retour à l'accueil</a></li>
+{% endblock %}
+
+{% block body %}
+
+    <section class="page-section cta">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+                    <div class="cta-inner text-center rounded">
+
+                        <ul class="list-unstyled list-hours mb-5 text-left mx-auto">
+                            <li class="list-unstyled-item list-hours-item d-flex">
+                                date de la visite:
+                                <span class="ml-auto">{{ resumeOrder.bookingDate|date("d/m/Y") }}</span>
+                            </li>
+                            <li class="list-unstyled-item list-hours-item d-flex">
+                                Type de réservation:
+                                <span class="ml-auto">{{ resumeOrder.typeOrder }}</span>
+                            </li>
+                            <li class="list-unstyled-item list-hours-item d-flex">
+
+                                <table>
+                                    <tr>
+                                        <th>
+
+                                            {% if resumeOrder.qteOrder <2 %}
+                                                participant:
+
+                                            {% else %}
+                                                Liste des participants :
+                                            {% endif %}
+
+                                        </th>
+
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            {% for ticket in resumeOrder.tickets %}
+                                                {{ ticket.firstname }} {{ ticket.lastname }}<br>
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                            {% for ticket in resumeOrder.tickets %}
+                                                {% if ticket.price == 10%}
+                                                    :   {{ ticket.price }}€ * <br>
+                                                {% elseif ticket.price == 5 %}
+                                                    :   {{ ticket.price }}€ * <br>
+                                                {% else %}
+                                                    :   {{ ticket.price }} €<br>
+
+
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
+
+
+                                    </tr>
+
+
+                                </table>
+                            </li>
+                            <li class="list-unstyled-item list-hours-item d-flex">
+                                Prix total:
+                                <span class="ml-auto">{{ resumeOrder.price }} €</span>
+                            </li>
+
+                        </ul>
+                        <div class="nav-space-checkout">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xs-12">
+
+                                    </div>
+
+                                    <div class="col-xs-12 col-sm-6">
+                                        <form action="" method="POST">
+                                            <script
+                                                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                                    data-key="{{ stripe_public_key }}"
+                                                    data-amount="{{ resumeOrder.price * 100 }}"
+                                                    data-name="Musée du Louvre"
+                                                    data-description="Widget"
+                                                    data-currency="EUR"
+                                                    data-email="{{ resumeOrder.mail }}"
+                                                    data-image="{{ asset('img/logo-louvre.jpg') }}"
+                                                    data-locale="fr">
+                                            </script>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% for ticket in resumeOrder.tickets %}
+                        {% if ticket.price == 10 %}
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xl-9 mx-auto">
+                                        <div class="cta-inner text-center rounded">
+* Le tarif réduit est réservé pour les étudiant, employé du musée,service du Ministère de la Culture, militaire….
+                                            <br>
+                                            A votre arrivé au musée, un justificatif vous sera demandé.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% elseif ticket.price == 5 %}
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xl-9 mx-auto">
+                                        <div class="cta-inner text-center rounded">
+                                            * Le tarif réduit est réservé pour les étudiant, employé du musée,service du Ministère de la Culture, militaire….
+                                            <br>
+                                            A votre arrivé au musée, un justificatif vous sera demandé.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+
+                        {% endif %}
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+{% endblock %}
+

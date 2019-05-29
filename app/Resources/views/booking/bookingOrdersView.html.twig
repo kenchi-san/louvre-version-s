@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+
+    <section class="page-section cta">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+
+                    <h2 class="section-heading mb-4">
+                        <span class="section-heading-upper">Formulaire de réservation:</span>
+                        <span class="section-heading-lower"></span>
+                    </h2>
+                    <p class="mb-0">
+
+                        {{ form_start(form) }}
+                        {{ form_widget(form.tickets) }}
+                        <button class="btn btn-success"> sauvegarder votre réservation:</button>
+                        {{ form_end(form) }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}

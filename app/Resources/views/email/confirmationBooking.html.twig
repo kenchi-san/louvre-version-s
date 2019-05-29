@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <style>
+
+        .decologo {
+            padding-bottom: 5%;
+            width: 300px;
+            height: 200px;
+        }
+
+        .container {
+            margin: 20%;
+        }
+
+        .resume {
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+        .infoMuseum {
+            float: right;
+        }
+
+        .row {
+            padding-top: 3%;
+        }
+
+        .content {
+            text-align: left;
+        }
+
+        table {
+            border-collapse: collapse;
+
+        }
+
+        /*td {
+            border: 1px solid black;
+        }
+
+        tfoot {
+            border: 1px solid black;
+
+        }*/
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="top">
+        <div class="infoMuseum">
+            <h3>Musée du Louvre</h3>
+            <br>
+            Adresse Postal : Rue de Rivoli, 75001 Paris<br>
+            numéro de téléphone : 01 40 20 50 50<br>
+            e-mail: Info.client@museedulouvre.com<br>
+        </div>
+        <div class="logo">
+            <img src="{{ absolute_url(asset('img/logo-louvre.jpg')) }}" class="decologo">
+
+        </div>
+    </div>
+    <div class="resume">
+        <!--resume Order -->
+        <div class="content">
+            Merci pour votre réservation. Vous trouverez les différentes informations relatives à votre demande
+            ci-dessous.<br>
+            <table>
+                <thead>
+                <tr>
+
+                    <th>
+                        {% if confirmationMail.qteOrder <2 %}
+                            participant:
+
+                        {% else %}
+                            Liste des participants :
+                        {% endif %}
+                    </th>
+                    <th>Prix</th>
+
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        {% for ticket in confirmationMail.tickets %}
+                            {{ ticket.firstname }} {{ ticket.lastname }}<br>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for ticket in confirmationMail.tickets %}
+                            {% if ticket.price == 10 %}
+                                {{ ticket.price }}€ * <br>
+                            {% elseif ticket.price == 5 %}
+                                {{ ticket.price }}€ * <br>
+                            {% else %}
+                                {{ ticket.price }} €<br>
+
+
+                            {% endif %}
+                        {% endfor %}
+
+                    </td>
+                <tr>
+                    <td>
+                        Date de réservation : {{ confirmationMail.bookingDate |date("d/m/Y") }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Type de réservation : {{ confirmationMail.typeOrder }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Numéro de réservation : {{ confirmationMail.bookingNumber }}
+                    </td>
+                </tr>
+
+
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>
+                        Prix Total :{{ confirmationMail.price }}€
+                    </th>
+
+                </tr>
+
+                </tfoot>
+            </table>
+            <table>
+
+                <tr>
+                    <th>
+                        {% for ticket in confirmationMail.tickets %}
+                            {% if ticket.price == 10 %}
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-xl-9 mx-auto">
+                                            <div class="cta-inner text-center rounded">
+                                                * Le tarif réduit est réservé pour les étudiant, employé du
+                                                musée,service du
+                                                Ministère
+                                                de la Culture, militaire….
+                                                <br>
+                                                A votre arrivé au musée, un justificatif vous sera demandé.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% elseif ticket.price == 5 %}
+                                <div class="contain">
+                                    <div class="row">
+                                        <div class="col-xl-9 mx-auto">
+                                            <div class="cta-inner text-center rounded">
+                                                * Le tarif réduit est réservé pour les étudiant, employé du
+                                                musée,service du
+                                                Ministère
+                                                de la Culture, militaire….
+                                                <br>
+                                                A votre arrivé au musée, un justificatif vous sera demandé.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+
+                            {% endif %}
+                        {% endfor %}
+                    </th>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<style>
+    .cta .cta-inner {
+        margin-left: -16%;
+        margin-right: -15%;
+
+    }
+    .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+        margin-left: -17%;
+    }
+</style>
+
+    <section class="page-section cta">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+                    <div class="cta-inner text-center rounded">
+
+                        <ul class="list-unstyled list-hours mb-5 text-left mx-auto">
+
+                            <li class="list-unstyled-item list-hours-item d-flex">
+                                {% if confirmationOrder.qteOrder <2 %}
+                                    participant:
+
+                                {% else %}
+                                    Nombre de participant :
+                                {% endif %}
+                                <span class="ml-auto"> {{ confirmationOrder.qteOrder }}</span>
+                            </li>
+                            <li class="list-unstyled-item list-hours-item d-flex">
+                                Jour de la visite:
+                                <span class="ml-auto">{{ confirmationOrder.bookingDate|date("d/m/Y") }}</span>
+                            </li>
+                            <li class="list-unstyled-item list-hours-item d-flex">
+                                Numéro de réservation :<br>
+                                <span class="ml-auto">{{ confirmationOrder.bookingNumber }}</span>
+                            </li>
+                            <li class="list-unstyled-item list-hours-item d-flex">
+                                Adresse mail client :
+                                <span class="ml-auto">{{ confirmationOrder.mail }}</span>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                    <a href="{{ path('homepage') }}" class="btn btn-primary btn-lg active" role="button"
+                       title="Lien 1">Retour
+                        à la page d'accueil:</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
+
+{% block accueil %}
+    <li class="nav-item px-lg-4"><a
+                class="nav-link text-uppercase text-expanded"
+                href="{{ path('homepage') }}">retour à l'accueil</a></li>
+{% endblock %}
+
